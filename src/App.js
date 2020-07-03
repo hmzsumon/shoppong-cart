@@ -1,5 +1,4 @@
-//feature-01
-
+// feature 1
 import React from 'react';
 import data from './data.json';
 import Products from './components/Products';
@@ -11,19 +10,31 @@ class App extends React.Component {
     super();
     this.state = {
       products: data.products,
-      cartItems: [],
+      cartItems: localStorage.getItem('cartItems')
+        ? JSON.parse(localStorage.getItem('cartItems'))
+        : [],
       size: '',
       sort: '',
     };
   }
-
+  createOrder = (order) => {
+    alert('Need to save order for ' + order.name);
+  };
+  removeFromCart = (product) => {
+    const cartItems = this.state.cartItems.slice();
+    this.setState({
+      cartItems: cartItems.filter((x) => x._id !== product._id),
+    });
+    localStorage.setItem(
+      'cartItems',
+      JSON.stringify(cartItems.filter((x) => x._id !== product._id))
+    );
+  };
   addToCart = (product) => {
-    console.log('hello click');
-
     const cartItems = this.state.cartItems.slice();
     let alreadyInCart = false;
     cartItems.forEach((item) => {
-      if (item._id == product._id) {
+      if (item._id === product._id) {
         item.count++;
         alreadyInCart = true;
       }
@@ -32,17 +43,10 @@ class App extends React.Component {
       cartItems.push({ ...product, count: 1 });
     }
     this.setState({ cartItems });
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
   };
-
-  removeFromCart = (product) => {
-    const cartItems = this.state.cartItems.slice();
-    this.setState({
-      cartItems: cartItems.filter((x) => x._id !== product._id),
-    });
-  };
-
   sortProducts = (event) => {
-    //impl
+    // impl
     const sort = event.target.value;
     console.log(event.target.value);
     this.setState((state) => ({
@@ -65,7 +69,7 @@ class App extends React.Component {
     }));
   };
   filterProducts = (event) => {
-    //impl
+    // impl
     console.log(event.target.value);
     if (event.target.value === '') {
       this.setState({ size: event.target.value, products: data.products });
@@ -82,7 +86,7 @@ class App extends React.Component {
     return (
       <div className="grid-container">
         <header>
-          <a href="/"> React Shopping Cart</a>
+          <a href="/">React Shopping Cart</a>
         </header>
         <main>
           <div className="content">
@@ -103,11 +107,12 @@ class App extends React.Component {
               <Cart
                 cartItems={this.state.cartItems}
                 removeFromCart={this.removeFromCart}
-              ></Cart>
+                createOrder={this.createOrder}
+              />
             </div>
           </div>
         </main>
-        <footer>All right reserved</footer>
+        <footer>All right is reserved.</footer>
       </div>
     );
   }
