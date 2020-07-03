@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
 html {
   font-size: 62.5%;
@@ -28,7 +28,7 @@ a:hover {
 
 .grid-container {
   display: grid;
-  grid-template-areas: "header""main""footer";
+  grid-template-areas: 'header' 'main' 'footer';
   grid-template-rows: 5rem 1fr 5rem;
   grid-template-columns: 1fr;
   height: 100%;
@@ -190,8 +190,8 @@ footer {
   width: 100%;
 }
 
-.total>div,
-.total>button {
+.total > div,
+.total > button {
   flex: 1;
 }
 
@@ -215,4 +215,27 @@ form {
 input {
   padding: 1rem;
   border: 0.1rem #c0c0c0 solid;
+}
+
+/* Product Details */
+.product-details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-height: 96vh;
+}
+.product-details img {
+  max-height: 100vh;
+  max-width: 46rem;
+  margin: 0 auto;
+}
+.product-details-description {
+  flex: 1 1;
+  margin: 1rem;
+}
+.close-modal {
+  position: absolute;
+  right: 1rem;
+  top: 2.5rem;
+  z-index: 1000;
 }
